@@ -1,0 +1,13 @@
+.Container {
+  background-color: #ebd5b3;
+}
+
+.Spellbook {
+  display: flex;
+  justify-content: center;
+}
+
+.Spellbook-Header {
+  text-align: center;
+  display: block;
+}
