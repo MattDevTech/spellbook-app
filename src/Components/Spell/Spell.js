@@ -1,6 +1,10 @@
 import React from "react";
 import "./Spell.css";
 
+const print = x => {
+    console.log(x);
+}
+
 const Spell = (props) => {
 
     return(
@@ -13,7 +17,7 @@ const Spell = (props) => {
             <li>Range: {props.spell.range}</li>
             <li>Attack Type or Save: {props.spell.attackOrSave}</li>
         </ul>
-        <button onClick={console.log(props)}>Hide Spell</button>                    
+        <button onClick={() => {print(props)}}>Hide Spell</button>                    
         </div>
             
     )

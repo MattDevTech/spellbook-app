@@ -16,6 +16,7 @@ function App() {
         
         <SpellsByLevel spellLevel="Cantrips" spellList={cantrips} />      
         <SpellsByLevel spellLevel="Level 1 Spells" spellList={level1Spells}/>
+        <SpellsByLevel spellLevel="Level 2 Spells" />
         
       </div>    
     </div>
