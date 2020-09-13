@@ -8,7 +8,7 @@ const SpellsByLevel = (props) => {
             <h2 className='SpellsByLevel-Header'>{props.spellLevel}</h2>
             {props.spellList &&
                 props.spellList.map(s => (
-                        <Spell spell={s}/>
+                        <Spell spellObject={s}/>
                 ))
             }            
         </div>

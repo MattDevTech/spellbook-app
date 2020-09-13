@@ -9,15 +9,16 @@ const Spell = (props) => {
 
     return(
 
-        <div className='SpellsByLevel-Spell' id={props.spell.spellName}>
-        <span><h3>{props.spell.spellName} <img className='SpellsByLevel-Image' src={props.spell.image} width="100px" alt={props.spell.spellName} /></h3></span>
+        <div className='SpellsByLevel-Spell' id={props.spellObject.spellName}>
+        <span><h3>{props.spellObject.spellName} <img className='SpellsByLevel-Image' src={props.spellObject.image} width="100px" alt={props.spellObject.spellName} /></h3></span>
         <ul>
-            <li>Spell School: {props.spell.spellSchool}</li>
-            <li>Casting Time: {props.spell.castingTime}</li>
-            <li>Range: {props.spell.range}</li>
-            <li>Attack Type or Save: {props.spell.attackOrSave}</li>
+            <li>Spell School: {props.spellObject.spellSchool}</li>
+            <li>Casting Time: {props.spellObject.castingTime}</li>
+            <li>Range: {props.spellObject.range}</li>
+            <li>Attack Type or Save: {props.spellObject.attackOrSave}</li>
         </ul>
-        <button onClick={() => {print(props)}}>Hide Spell</button>                    
+
+        <button onClick={() => {print(props)}}>Hide Spell</button>                   
         </div>
             
     )
