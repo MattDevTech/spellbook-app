@@ -15,8 +15,13 @@ const Spell = (props) => {
                 <li>Casting Time: {props.spell.castingTime}</li>
                 <li>Range: {props.spell.range}</li>
                 <li>Attack Type or Save: {props.spell.attackOrSave}</li>
-            </ul> : null}
-        <button onClick={() => setVisible(!visible)}>Hide Details</button>                    
+                <button onClick={() => setVisible(!visible)}>Hide {props.spell.spellName} Details</button>
+            </ul>             
+            : 
+            <button onClick={() => setVisible(!visible)}>Show {props.spell.spellName} Details</button>
+        }
+        <hr></hr>
+                            
         </div>
             
     )
