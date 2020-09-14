@@ -17,7 +17,7 @@ const SpellsByLevel = (props) => {
             props.spellList &&
                 props.spellList.map(s => (
                         <Spell spell={s}/>
-                )) : null}            
+                )) : null}
         </div>
     )
 }
