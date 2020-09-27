@@ -2,6 +2,7 @@ const level1Spells = [
     {
         spellName: "Absorb Elements",
         spellSchool: "Abjuration",
+        spellLevel: "Level 1",
         castingTime: "1 Reaction",
         range: "Self",
         attackOrSave: null,
@@ -10,6 +11,7 @@ const level1Spells = [
     {
         spellName: "Acid Stream",
         spellSchool: "Evocation",
+        spellLevel: "Level 1",
         castingTime: "1 Action",
         range: 30,
         attackOrSave: "Dex",
@@ -18,6 +20,7 @@ const level1Spells = [
     {
         spellName: "Animal Friendship",
         spellSchool: "Enchantment",
+        spellLevel: "Level 1",
         castingTime: "1 Action",
         range: 30,
         attackOrSave: "Wis",

@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
-import cantrips from '../SpellLists/CantripsList.js';
-import level1Spells from '../SpellLists/Level1List.js';
-import SpellsByLevel from '../SpellsByLevel/SpellsByLevel.js';
 import Logo from '../../images/DnDLogo.jpg'
 import './App.css';
 import Filters from '../Filters/Filters.js';
+import Spell from '../Spell/Spell.js';
+import allSpells from '../SpellLists/AllSpells.js';
+// import cantrips from '../SpellLists/CantripsList.js';
+// import level1Spells from '../SpellLists/Level1List.js';
+// import SpellsByLevel from '../SpellsByLevel/SpellsByLevel.js';
 
-const applyFilters = (spells, activeFilters) => {
-  filteredSpells = [];
-  spells.forEach(spell => {
-    activeFilters.forEach(filter => {
+// const applyFilters = (spells, activeFilters) => {
+//   filteredSpells = [];
+//   spells.forEach(spell => {
+//     activeFilters.forEach(filter => {
       
-    })
-  });
+//     })
+//   });
 
-  return filteredSpells;
-}
+//   return filteredSpells;
+// }
+
 
 function App() {
-  this.state = {
-    activeFilters = []
-  }
+  // this.state = {
+  //   activeFilters = []
+  // }
+
+  const fullSpellList = allSpells;
 
   return (
     <div className="Container">
@@ -29,11 +34,12 @@ function App() {
         <h1 className="Spellbook-Header">Spellbook</h1>
       </div>
       <div className="Spellbook">
-        <Filters />        
-        <SpellsByLevel spellLevel="Cantrips" spellList={cantrips} />      
-        <SpellsByLevel spellLevel="Level 1 Spells" spellList={level1Spells}/>
-        <SpellsByLevel spellLevel="Level 2 Spells" />
-        
+        <Filters />  
+        {fullSpellList.map(spellLevel => (
+          spellLevel.map(spell => (
+            <Spell spell={spell}/>
+          ))                        
+        ))}
       </div>    
     </div>
   );
