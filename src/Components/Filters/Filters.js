@@ -14,16 +14,16 @@ export default function Filters() {
             <h1>Filter By: </h1>
             {spellSchools.map(s => (
                 <>
-                    <input type='checkbox' id={s} value={s} name={s} />
-                    <label for={s}> {s}</label>
+                    <input type='checkbox' id={s} value={s} name={s} key={Math.floor((Math.random * Math.random() * 100) + 1)}/>
+                    <label htmlFor={s}> {s}</label>
                 </>
             ))}
             <br></br>
             <br></br>
             {otherFilters.map(f => (
                 <>
-                    <input type='checkbox' id={f.name} value={f.value} name={f.name} />
-                    <label for={f.name}> {f.name}</label>
+                    <input type='checkbox' id={f.name} value={f.value} name={f.name} key={Math.floor((Math.random() * Math.random() * 100) + 1)} />
+                    <label htmlFor={f.name}> {f.name}</label>
                 </>
             ))}
         </div>
