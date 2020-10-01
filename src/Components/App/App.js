@@ -1,26 +1,44 @@
-import React from 'react';
-import cantrips from '../SpellLists/CantripsList.js';
-import level1Spells from '../SpellLists/Level1List.js';
-import SpellsByLevel from '../SpellsByLevel/SpellsByLevel.js';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../images/DnDLogo.jpg'
 import './App.css';
+import FiltersList from '../Filters/FiltersList.js';
+import Spell from '../Spell/Spell.js';
+import allSpells from '../SpellLists/AllSpells.js';
+import Searchbox from '../Searchbox/Searchbox.js';
 
-function App() {
-  return (
-    <div className="Container">
-      <div className="Header">
-        <img src={Logo} width="250" alt="Logo"/>
-        <h1 className="Spellbook-Header">Spellbook</h1>
+
+function App () {
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filtersApplied, setFiltersApplied] = useState(false);
+  const [filteredSpells, setFilteredSpells] = useState([]);
+  const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
+  const handleSearch = e => {
+    setSearchTerm(e.target.value);
+  }
+
+  useEffect(() => {
+    searchTerm === '' && filtersApplied === false ? setSpellsToDisplay(allSpells) :
+    setSpellsToDisplay(allSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
+  }, [searchTerm])
+  
+
+    return (
+      <div className="Container">
+        <div className="Header">
+          <img src={Logo} width="250" alt="Logo"/>
+          <h1 className="Spellbook-Header">Spellbook</h1>
+        </div>
+        <Searchbox handleSearch={handleSearch} />
+        <FiltersList />
+        <div className="Spellbook"> 
+          {spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
+          spellsToDisplay.map(spell => (
+              <Spell key={spell.id} spell={spell}/>                      
+          ))}
+        </div>    
       </div>
-      <div className="Spellbook">
-        
-        <SpellsByLevel spellLevel="Cantrips" spellList={cantrips} />      
-        <SpellsByLevel spellLevel="Level 1 Spells" spellList={level1Spells}/>
-        <SpellsByLevel spellLevel="Level 2 Spells" />
-        
-      </div>    
-    </div>
-  );
+    );
 }
 
 export default App;

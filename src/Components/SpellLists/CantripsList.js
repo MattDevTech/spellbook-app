@@ -2,6 +2,7 @@ const cantrips = [
     {
         spellName: "Acid Splash",
         spellSchool: "Conjuration",
+        spellLevel: "Cantrip",
         castingTime: "1 Action",
         range: 60,
         attackOrSave: "Dex",
@@ -10,6 +11,7 @@ const cantrips = [
     {
         spellName: "Blade Ward",
         spellSchool: "Abjuration",
+        spellLevel: "Cantrip",
         castingTime: "1 Action",
         range: "Self",
         attackOrSave: null,
@@ -18,6 +20,7 @@ const cantrips = [
     {
         spellName: "Booming Blade",
         spellSchool: "Evocation",
+        spellLevel: "Cantrip",
         castingTime: "1 Action",
         range: 5,
         attackOrSave: "Melee",
@@ -26,6 +29,7 @@ const cantrips = [
     {
         spellName: "Chill Touch",
         spellSchool: "Necromancy",
+        spellLevel: "Cantrip",
         castingTime: "1 Action",
         range: 120,
         attackOrSave: "Ranged",
