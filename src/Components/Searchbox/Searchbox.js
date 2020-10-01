@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function Searchbox(props) {
+export default function Searchbox({handleSearch}) {
     return (
         <div>
-            <input onChange={props.handleSearch} type="text" id="spellSearch" name="spellSearch"></input>
-            <label htmlFor="spellSearch">Search Spells:</label>
+             <label htmlFor="spellSearch">Search Spells:</label>
+            <input onChange={handleSearch} type="text" id="spellSearch" name="spellSearch"></input>
         </div>
     )
 }
