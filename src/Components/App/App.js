@@ -16,6 +16,9 @@ function App () {
   const handleSearch = e => {
     setSearchTerm(e.target.value);
   }
+  const remove = (spell) => {
+    setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== spell.spellName))
+  }
 
   useEffect(() => {
     searchTerm === '' && filtersApplied === false ? setSpellsToDisplay(allSpells) :
@@ -34,7 +37,11 @@ function App () {
         <div className="Spellbook"> 
           {spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
           spellsToDisplay.map(spell => (
-              <Spell key={spell.id} spell={spell}/>                      
+              <Spell 
+                key={spell.spellName} 
+                spell={spell} 
+                remove={remove}
+              />                      
           ))}
         </div>    
       </div>
