@@ -15,17 +15,17 @@ const AllFiltersList = [
         filterName:'EvocationSchoolFilter'
     },
     {
-        displayName:'Cantrips',
-        filterType:'SpellLevel',
-        filterName:'LevelCantripsFilter'
+        displayName:'Cantrip',
+        filterType:'Spell Level',
+        filterName:'CantripFilter'
     },
     {
-        displayName:'Level 1 Spells',
+        displayName:'Level 1',
         filterType:'Spell Level',
         filterName:'Level1Filter'
     },
     {
-        displayName:'Level 2 Spells',
+        displayName:'Level 2',
         filterType:'Spell Level',
         filterName:'Level2Filter'
     },

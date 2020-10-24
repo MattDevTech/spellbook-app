@@ -33,7 +33,7 @@ function App () {
           <h1 className="Spellbook-Header">Spellbook</h1>
         </div>
         <Searchbox handleSearch={handleSearch} />
-        <FiltersList />
+        <FiltersList setSpellsToDisplay={setSpellsToDisplay} spellsToDisplay={spellsToDisplay}/>
         <div className="Spellbook"> 
           {spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
           spellsToDisplay.map(spell => (

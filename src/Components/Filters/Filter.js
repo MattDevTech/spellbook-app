@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import allSpells from '../SpellLists/AllSpells'
 
-export default function Filter({filter}) {
+export default function Filter({filter, setSpellsToDisplay, spellsToDisplay}) {
     const [isChecked, setIsChecked] = useState(false)
     const handleFilterClick = e => {
-        console.log(e.target)
         setIsChecked(!isChecked)
-        console.log('Filter Checked')
     }
+    useEffect(() => {
+        isChecked === true ? setSpellsToDisplay(spellsToDisplay.filter(spell => Object.values(spell).includes(filter.displayName))) :
+        setSpellsToDisplay(allSpells)
+      }, [isChecked])
+
     return (
         <div>
             <input 
