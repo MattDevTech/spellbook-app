@@ -15,6 +15,7 @@ const Spell = ({spell, remove}) => {
             {visible === true ? 
                 <ul>
                     <li>Spell School: {spell.spellSchool}</li>
+                    <li>Spell Level: {spell.spellLevel}</li>
                     <li>Casting Time: {spell.castingTime}</li>
                     <li>Range: {spell.range}</li>
                     <li>Attack Type or Save: {spell.attackOrSave}</li>

@@ -21,8 +21,12 @@ function App () {
   }
 
   useEffect(() => {
-    searchTerm === '' && filtersApplied === false ? setSpellsToDisplay(allSpells) :
-    setSpellsToDisplay(allSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
+    if(searchTerm === '' && filtersApplied === false) {
+        setSpellsToDisplay(allSpells)
+    }
+    else if(searchTerm !== '' && filtersApplied === false) {
+      setSpellsToDisplay(allSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
+    }
   }, [searchTerm])
   
 
