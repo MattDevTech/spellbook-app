@@ -18,8 +18,6 @@ function App() {
         } else {
             setSpellsToDisplay(filteredSpells);
         }
-
-        setSpellsToDisplay(filteredSpells);
     }, [searchTerm, filteredSpells]);
 
     const remove = (spell) => {
@@ -36,12 +34,14 @@ function App() {
             <SearchBox
                 spells={filteredSpells}
                 setFilteredSpells={setFilteredSpells}
+                setSpellsToDisplay={setSpellsToDisplay}
                 setSearchTerm={setSearchTerm}
             />
 
             <FiltersList
                 spells={filteredSpells}
                 setFilteredSpells={setFilteredSpells}
+                setSpellsToDisplay={setSpellsToDisplay}
             />
 
             <div className="Spellbook">
