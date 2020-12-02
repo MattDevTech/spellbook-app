@@ -1,29 +1,31 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Filter from './Filter.js'
 import AllFiltersList from './AllFiltersList.js'
+import allSpells from "../SpellLists/AllSpells";
 
-export default function FiltersList({spells, setSpellsToDisplay}) {
-    let activeFilters = [];
+export default function FiltersList({spells, setFilteredSpells}) {
+    const [activeFilters, setActiveFilters] = useState([]);
+
+    useEffect(() => {
+        if(activeFilters.length === 0){
+            setFilteredSpells(spells);
+        } else {
+            let filteredSpells = filterSpells(activeFilters);
+            setFilteredSpells(filteredSpells)
+        }
+    }, [activeFilters]);
 
     const handleFilterClick = (event, filter) => {
         if(event.target.checked){
-            activeFilters.push(filter.displayName);
+            setActiveFilters(activeFilters => [...activeFilters, filter.displayName]);
         } else {
-            activeFilters = activeFilters.filter(activeFilter => activeFilter !== filter.displayName);
-        }
-        console.log(activeFilters)
-
-        if(activeFilters.length === 0){
-            setSpellsToDisplay(spells);
-        } else {
-            let filteredSpells = filterSpells(activeFilters);
-            console.log(filteredSpells);
-            //setSpellsToDisplay(filteredSpells);
+            setActiveFilters(activeFilters.filter(activeFilter => activeFilter !== filter.displayName));
         }
     }
 
     const filterSpells = function(filters) {
         let filteredSpells = [];
+
         spells.forEach((spell) => {
             let include = false;
 

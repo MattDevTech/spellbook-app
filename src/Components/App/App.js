@@ -4,26 +4,23 @@ import './App.css';
 import FiltersList from '../Filters/FiltersList.js';
 import Spell from '../Spell/Spell.js';
 import allSpells from '../SpellLists/AllSpells.js';
-import Searchbox from '../Searchbox/Searchbox.js';
+import SearchBox from '../Searchbox/Searchbox.js';
 
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [filtersApplied, setFiltersApplied] = useState([]);
-    const [filteredSpells, setFilteredSpells] = useState([]);
+    const [filteredSpells, setFilteredSpells] = useState(allSpells);
     const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
 
     useEffect(() => {
-        if (searchTerm === '' && filtersApplied.length === 0) {
-            setSpellsToDisplay(allSpells)
-        } else if (searchTerm !== '' && filtersApplied.length === 0) {
-            setSpellsToDisplay(allSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
-        } else if (searchTerm === '' && filtersApplied.length > 0) {
-            setSpellsToDisplay(filteredSpells)
-        } else {
+        if (searchTerm !== '') {
             setSpellsToDisplay(filteredSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
+        } else {
+            setSpellsToDisplay(filteredSpells);
         }
-    }, [searchTerm, filteredSpells, filtersApplied]);
+
+        setSpellsToDisplay(filteredSpells);
+    }, [searchTerm, filteredSpells]);
 
     const remove = (spell) => {
         setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== spell.spellName))
@@ -35,11 +32,16 @@ function App() {
                 <img src={Logo} width="250" alt="Logo"/>
                 <h1 className="Spellbook-Header">Spellbook</h1>
             </div>
-            <Searchbox setSearchTerm={setSearchTerm}/>
+
+            <SearchBox
+                spells={filteredSpells}
+                setFilteredSpells={setFilteredSpells}
+                setSearchTerm={setSearchTerm}
+            />
 
             <FiltersList
-                spells={allSpells}
-                setFilteredSpells={setSpellsToDisplay}
+                spells={filteredSpells}
+                setFilteredSpells={setFilteredSpells}
             />
 
             <div className="Spellbook">
