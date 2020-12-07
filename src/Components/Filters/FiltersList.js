@@ -3,15 +3,14 @@ import Filter from './Filter.js'
 import AllFiltersList from './AllFiltersList.js'
 import allSpells from "../SpellLists/AllSpells";
 
-export default function FiltersList({spells, setFilteredSpells, setSpellsToDisplay}) {
-    const [activeFilters, setActiveFilters] = useState([]);
+export default function FiltersList({spells, activeFilters, setActiveFilters, filterSpells, setSpellsToDisplay}) {
+    
 
     useEffect(() => {
         if(activeFilters.length === 0){
             setSpellsToDisplay(spells);
         } else {
-            let filteredSpells = filterSpells(activeFilters);
-            setSpellsToDisplay(filteredSpells)
+            setSpellsToDisplay(filterSpells(activeFilters))
         }
     }, [activeFilters]);
 
@@ -21,29 +20,6 @@ export default function FiltersList({spells, setFilteredSpells, setSpellsToDispl
         } else {
             setActiveFilters(activeFilters.filter(activeFilter => activeFilter !== filter.displayName));
         }
-    }
-
-    const filterSpells = function(filters) {
-        let filteredSpells = [];
-
-        spells.forEach((spell) => {
-            let include = false;
-
-            filters.forEach(filter => {
-                Object.values(spell).forEach(value => {
-                    if (value === filter) {
-                        include = true;
-                        return;
-                    }
-                });
-            });
-
-            if(include){
-                filteredSpells.push(spell);
-            }
-        });
-
-        return filteredSpells;
     }
 
     return (

@@ -11,17 +11,66 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredSpells, setFilteredSpells] = useState(allSpells);
     const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
+    const [activeFilters, setActiveFilters] = useState([]);
 
     useEffect(() => {
-        if (searchTerm !== '') {
-            setSpellsToDisplay(filteredSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
-        } else {
-            setSpellsToDisplay(filteredSpells);
-        }
-    }, [searchTerm, filteredSpells]);
+        console.log("useEffect Activated")
+    }, [spellsToDisplay]);
 
     const remove = (spell) => {
         setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== spell.spellName))
+    }
+
+    const filterSpells = function(filters) {
+        if(filters && filters.length > 0) {
+            if(searchTerm && searchTerm.length > 0){
+                let filteredSpellsArray = [];
+
+                spellsToDisplay.forEach((spell) => {
+                    let include = false;
+
+                    filters.forEach(filter => {
+                        Object.values(spell).forEach(value => {
+                            if (value === filter) {
+                                include = true;
+                                return;
+                            }
+                        });
+                    });
+
+                    if(include){
+                        filteredSpellsArray.push(spell);
+                    }
+                });
+        
+                return filteredSpellsArray;
+            }
+            else {
+                let filteredSpellsArray = [];
+
+                allSpells.forEach((spell) => {
+                let include = false;
+
+                filters.forEach(filter => {
+                    Object.values(spell).forEach(value => {
+                        if (value === filter) {
+                            include = true;
+                            return;
+                        }
+                    });
+                });
+
+                if(include){
+                    filteredSpellsArray.push(spell);
+                }
+                });
+        
+                return filteredSpellsArray;
+            }
+        }
+        else {
+            return allSpells;
+        }
     }
 
     return (
@@ -32,15 +81,20 @@ function App() {
             </div>
 
             <SearchBox
-                spells={filteredSpells}
-                setFilteredSpells={setFilteredSpells}
+                spellsToDisplay={spellsToDisplay}
                 setSpellsToDisplay={setSpellsToDisplay}
                 setSearchTerm={setSearchTerm}
+                activeFilters={activeFilters}
+                allSpells={allSpells}
+                filterSpells={filterSpells}
             />
 
             <FiltersList
                 spells={filteredSpells}
-                setFilteredSpells={setFilteredSpells}
+                activeFilters={activeFilters}
+                setActiveFilters={setActiveFilters}
+                filterSpells={filterSpells}
+                spellsToDisplay={spellsToDisplay}
                 setSpellsToDisplay={setSpellsToDisplay}
             />
 
