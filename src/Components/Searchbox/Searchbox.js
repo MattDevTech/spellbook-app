@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Searchbox({spellsToDisplay, setSearchTerm, setSpellsToDisplay, activeFilters, filterSpells}) {
+export default function Searchbox({setSearchTerm, setSpellsToDisplay, activeFilters, filterSpells}) {
 
     const handleSearch = e => {
         if(e.target.value.length === 0){

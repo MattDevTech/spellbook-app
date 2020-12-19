@@ -3,15 +3,11 @@ import Filter from './Filter.js'
 import AllFiltersList from './AllFiltersList.js'
 import allSpells from "../SpellLists/AllSpells";
 
-export default function FiltersList({spells, activeFilters, setActiveFilters, filterSpells, setSpellsToDisplay}) {
+export default function FiltersList({activeFilters, setActiveFilters, filterSpells, setSpellsToDisplay}) {
     
 
     useEffect(() => {
-        if(activeFilters.length === 0){
-            setSpellsToDisplay(spells);
-        } else {
-            setSpellsToDisplay(filterSpells(activeFilters))
-        }
+        setSpellsToDisplay(filterSpells(activeFilters));
     }, [activeFilters]);
 
     const handleFilterClick = (event, filter) => {

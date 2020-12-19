@@ -9,24 +9,21 @@ import SearchBox from '../Searchbox/Searchbox.js';
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [filteredSpells, setFilteredSpells] = useState(allSpells);
     const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
     const [activeFilters, setActiveFilters] = useState([]);
 
-    useEffect(() => {
-        console.log("useEffect Activated")
-    }, [spellsToDisplay]);
-
-    const remove = (spell) => {
-        setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== spell.spellName))
-    }
-
     const filterSpells = function(filters) {
-        if(filters && filters.length > 0) {
-            if(searchTerm && searchTerm.length > 0){
-                let filteredSpellsArray = [];
+        // debugger;
+        if(filters && filters.length === 0 && searchTerm === ''){
+            return allSpells
+        }
 
-                spellsToDisplay.forEach((spell) => {
+        else if(filters && filters.length > 0) {
+
+            let filteredSpellsArray = [];
+
+            if(searchTerm && searchTerm.length > 0){
+                allSpells.forEach((spell) => {
                     let include = false;
 
                     filters.forEach(filter => {
@@ -46,7 +43,6 @@ function App() {
                 return filteredSpellsArray;
             }
             else {
-                let filteredSpellsArray = [];
 
                 allSpells.forEach((spell) => {
                 let include = false;
@@ -81,7 +77,6 @@ function App() {
             </div>
 
             <SearchBox
-                spellsToDisplay={spellsToDisplay}
                 setSpellsToDisplay={setSpellsToDisplay}
                 setSearchTerm={setSearchTerm}
                 activeFilters={activeFilters}
@@ -90,7 +85,6 @@ function App() {
             />
 
             <FiltersList
-                spells={filteredSpells}
                 activeFilters={activeFilters}
                 setActiveFilters={setActiveFilters}
                 filterSpells={filterSpells}
@@ -99,12 +93,13 @@ function App() {
             />
 
             <div className="Spellbook">
-                {spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
+                {spellsToDisplay && spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
                     spellsToDisplay.map(spell => (
                         <Spell
                             key={spell.spellName}
                             spell={spell}
-                            remove={remove}
+                            spellsToDisplay={spellsToDisplay}
+                            setSpellsToDisplay={setSpellsToDisplay}
                         />
                     ))}
             </div>
