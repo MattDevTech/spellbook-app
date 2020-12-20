@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 import "./Spell.css";
 
-const Spell = ({spell, remove}) => {
+const Spell = ({spell, spellsToDisplay, setSpellsToDisplay}) => {
     const [visible, setVisible] = useState(true);
-    const handleRemove = () => {
-        remove(spell)
+    const remove = (e) => {
+        setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== e.currentTarget.parentElement.id))
     }
 
     return(
@@ -24,7 +24,7 @@ const Spell = ({spell, remove}) => {
                 : 
                 <button onClick={() => setVisible(!visible)}>Show {spell.spellName} Details</button>
             }
-            <button onClick={handleRemove}>Remove {spell.spellName}</button>
+            <button onClick={remove}>Remove {spell.spellName}</button>
             <hr></hr>
                             
         </div>

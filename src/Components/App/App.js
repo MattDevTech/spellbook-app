@@ -1,69 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Logo from '../../images/DnDLogo.jpg'
 import './App.css';
 import FiltersList from '../Filters/FiltersList.js';
 import Spell from '../Spell/Spell.js';
 import allSpells from '../SpellLists/AllSpells.js';
-import Searchbox from '../Searchbox/Searchbox.js';
+import SearchBox from '../Searchbox/Searchbox.js';
 
 
-function App () {
-  
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filtersApplied, setFiltersApplied] = useState([]);
-  const [filteredSpells, setFilteredSpells] = useState([]);
-  const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
-  const handleSearch = e => {
-    setSearchTerm(e.target.value);
-  }
-  const remove = (spell) => {
-    setSpellsToDisplay(spellsToDisplay.filter(s => s.spellName !== spell.spellName))
-  }
+function App() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
+    const [activeFilters, setActiveFilters] = useState([]);
 
-  useEffect(() => {
-    if(searchTerm === '' && filtersApplied.length === 0) {
-        setSpellsToDisplay(allSpells)
-    }
-    else if(searchTerm !== '' && filtersApplied.length === 0) {
-      setSpellsToDisplay(allSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))
-    }
-    else if(searchTerm === '' && filtersApplied.length > 0) {
-      setSpellsToDisplay(filteredSpells)
-    }
+    const filterSpells = function(filters) {
+        // debugger;
+        if(filters && filters.length === 0 && searchTerm === ''){
+            return allSpells
+        }
 
-    else{
-      setSpellsToDisplay(filteredSpells.filter(spell => spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())))  
+        else if(filters && filters.length > 0) {
+
+            let filteredSpellsArray = [];
+
+            if(searchTerm && searchTerm.length > 0){
+                allSpells.forEach((spell) => {
+                    let include = false;
+
+                    filters.forEach(filter => {
+                        Object.values(spell).forEach(value => {
+                            if (value === filter) {
+                                include = true;
+                                return;
+                            }
+                        });
+                    });
+
+                    if(include){
+                        filteredSpellsArray.push(spell);
+                    }
+                });
+        
+                return filteredSpellsArray;
+            }
+            else {
+
+                allSpells.forEach((spell) => {
+                let include = false;
+
+                filters.forEach(filter => {
+                    Object.values(spell).forEach(value => {
+                        if (value === filter) {
+                            include = true;
+                            return;
+                        }
+                    });
+                });
+
+                if(include){
+                    filteredSpellsArray.push(spell);
+                }
+                });
+        
+                return filteredSpellsArray;
+            }
+        }
+        else {
+            return allSpells;
+        }
     }
-  }, [searchTerm, filteredSpells, filtersApplied])
-  
 
     return (
-      <div className="Container">
-        <div className="Header">
-          <img src={Logo} width="250" alt="Logo"/>
-          <h1 className="Spellbook-Header">Spellbook</h1>
+        <div className="Container">
+            <div className="Header">
+                <img src={Logo} width="250" alt="Logo"/>
+                <h1 className="Spellbook-Header">Spellbook</h1>
+            </div>
+
+            <SearchBox
+                setSpellsToDisplay={setSpellsToDisplay}
+                setSearchTerm={setSearchTerm}
+                activeFilters={activeFilters}
+                allSpells={allSpells}
+                filterSpells={filterSpells}
+            />
+
+            <FiltersList
+                activeFilters={activeFilters}
+                setActiveFilters={setActiveFilters}
+                filterSpells={filterSpells}
+                spellsToDisplay={spellsToDisplay}
+                setSpellsToDisplay={setSpellsToDisplay}
+            />
+
+            <div className="Spellbook">
+                {spellsToDisplay && spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
+                    spellsToDisplay.map(spell => (
+                        <Spell
+                            key={spell.spellName}
+                            spell={spell}
+                            spellsToDisplay={spellsToDisplay}
+                            setSpellsToDisplay={setSpellsToDisplay}
+                        />
+                    ))}
+            </div>
         </div>
-        <Searchbox handleSearch={handleSearch} />
-        <FiltersList 
-          setSpellsToDisplay={setSpellsToDisplay} 
-          spellsToDisplay={spellsToDisplay}
-          filtersApplied={filtersApplied}
-          setFiltersApplied={setFiltersApplied}
-          filteredSpells={filteredSpells}
-          setFilteredSpells={setFilteredSpells}
-          allSpells={allSpells}
-        />
-        <div className="Spellbook"> 
-          {spellsToDisplay.length < 1 ? <h2>No Spells Found</h2> :
-          spellsToDisplay.map(spell => (
-              <Spell 
-                key={spell.spellName} 
-                spell={spell} 
-                remove={remove}
-              />                      
-          ))}
-        </div>    
-      </div>
     );
 }
 
