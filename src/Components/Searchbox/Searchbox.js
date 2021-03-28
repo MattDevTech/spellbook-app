@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Searchbox({setSearchTerm, searchTerm}) {
+export default function Searchbox({setSearchTerm}) {
 
+    /*Update the searchTerm value to match the value in the searchbox. Once the searchTerm value is updated the useEffect in App.js is called and updates the spells displayed
+    */
     const updateSearchTerm = e => {
         setSearchTerm(e.target.value);
     }
