@@ -37,6 +37,7 @@ const allSpells = [
         range: "Self",
         attackOrSave: null,
         image: "http://media-waterdeep.cursecdn.com/attachments/2/707/abjuration.png",
+        damageOrEffect: "Has Non-Damaging Effect",
         id: 4
     },
     {

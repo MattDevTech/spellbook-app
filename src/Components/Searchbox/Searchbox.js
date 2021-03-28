@@ -1,21 +1,17 @@
 import React from 'react'
 
-export default function Searchbox({setSearchTerm, setSpellsToDisplay, activeFilters, filterSpells}) {
+export default function Searchbox({setSearchTerm}) {
 
-    const handleSearch = e => {
-        if(e.target.value.length === 0){
-            setSpellsToDisplay(filterSpells(activeFilters))
-        }
-        else{
-            setSpellsToDisplay(filterSpells(activeFilters).filter(spell => spell.spellName.toLowerCase().includes(e.target.value.toLowerCase())));
-        }
+    /*Update the searchTerm value to match the value in the searchbox. Once the searchTerm value is updated the useEffect in App.js is called and updates the spells displayed
+    */
+    const updateSearchTerm = e => {
         setSearchTerm(e.target.value);
     }
 
     return (
         <div>
              <label htmlFor="spellSearch">Search Spells:</label>
-            <input onChange={handleSearch} type="text" id="spellSearch" name="spellSearch" />
+            <input onChange={updateSearchTerm} type="text" id="spellSearch" name="spellSearch" />
         </div>
     )
 }
