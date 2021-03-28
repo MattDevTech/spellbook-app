@@ -10,62 +10,97 @@ import SearchBox from '../Searchbox/Searchbox.js';
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [spellsToDisplay, setSpellsToDisplay] = useState(allSpells);
-    const [activeFilters, setActiveFilters] = useState([]);
+    const [activeSchoolFilters, setActiveSchoolFilters] = useState([]);
+    const [activeLevelFilters, setActiveLevelFilters] = useState([]);
+    const [activeEffectFilters, setActiveEffectFilters] = useState([]);
 
-    const filterSpells = function(filters) {
-        // debugger;
-        if(filters && filters.length === 0 && searchTerm === ''){
+
+    const filterSpells = function(searchTerm = '', activeSchoolFilters = [], activeLevelFilters = [], activeEffectFilters = []) {
+        if(activeSchoolFilters && activeSchoolFilters.length === 0 && activeLevelFilters && activeLevelFilters.length === 0 && activeEffectFilters && activeEffectFilters.length === 0 && searchTerm === ''){
             return allSpells
         }
 
-        else if(filters && filters.length > 0) {
+        else{
 
             let filteredSpellsArray = [];
+            let previouslyFilteredSpells = [];
 
-            if(searchTerm && searchTerm.length > 0){
+            if(searchTerm.length !== 0){
                 allSpells.forEach((spell) => {
                     let include = false;
 
-                    filters.forEach(filter => {
-                        Object.values(spell).forEach(value => {
-                            if (value === filter) {
-                                include = true;
-                                return;
-                            }
-                        });
+                    if (spell.spellName.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        include = true;
+                    };
+
+                    if(include){
+                        filteredSpellsArray.push(spell);
+                    }
+                });
+            }
+
+            if(activeSchoolFilters.length !== 0){
+                previouslyFilteredSpells = filteredSpellsArray.length > 0 ? filteredSpellsArray : allSpells;
+                filteredSpellsArray = [];
+
+                previouslyFilteredSpells.forEach((spell) => {
+                    let include = false;
+
+                    activeSchoolFilters.forEach(filter => {
+                        if (spell.spellSchool === filter) {
+                            include = true;
+                            return;
+                        };
                     });
 
                     if(include){
                         filteredSpellsArray.push(spell);
                     }
                 });
-        
-                return filteredSpellsArray;
             }
-            else {
 
-                allSpells.forEach((spell) => {
-                let include = false;
+            if(activeLevelFilters.length !== 0){
+                previouslyFilteredSpells = filteredSpellsArray.length > 0 ? filteredSpellsArray : allSpells;
+                filteredSpellsArray = [];
 
-                filters.forEach(filter => {
-                    Object.values(spell).forEach(value => {
-                        if (value === filter) {
+                previouslyFilteredSpells.forEach((spell) => {
+                    let include = false;
+
+                    activeLevelFilters.forEach(filter => {
+                        if (spell.spellLevel === filter) {
                             include = true;
                             return;
-                        }
+                        };
                     });
-                });
 
-                if(include){
-                    filteredSpellsArray.push(spell);
-                }
+                    if(include){
+                        filteredSpellsArray.push(spell);
+                    }
                 });
-        
-                return filteredSpellsArray;
             }
-        }
-        else {
-            return allSpells;
+
+            if(activeEffectFilters.length !== 0){
+                previouslyFilteredSpells = filteredSpellsArray.length > 0 ? filteredSpellsArray : allSpells;
+                filteredSpellsArray = [];
+                
+                previouslyFilteredSpells.forEach((spell) => {
+                    let include = false;
+
+                    activeEffectFilters.forEach(filter => {
+                        if (spell.damageOrEffect === filter) {
+                            include = true;
+                            return;
+                        };
+                    });
+
+                    if(include){
+                        filteredSpellsArray.push(spell);
+                    }
+                });
+            }
+
+
+            return Array.from(new Set(filteredSpellsArray));
         }
     }
 
@@ -77,19 +112,21 @@ function App() {
             </div>
 
             <SearchBox
-                setSpellsToDisplay={setSpellsToDisplay}
+                searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-                activeFilters={activeFilters}
-                allSpells={allSpells}
-                filterSpells={filterSpells}
             />
 
             <FiltersList
-                activeFilters={activeFilters}
-                setActiveFilters={setActiveFilters}
+                searchTerm={searchTerm}
                 filterSpells={filterSpells}
                 spellsToDisplay={spellsToDisplay}
                 setSpellsToDisplay={setSpellsToDisplay}
+                activeSchoolFilters = {activeSchoolFilters}
+                setActiveSchoolFilters = {setActiveSchoolFilters}
+                activeLevelFilters = {activeLevelFilters}
+                setActiveLevelFilters = {setActiveLevelFilters}
+                activeEffectFilters = {activeEffectFilters}
+                setActiveEffectFilters = {setActiveEffectFilters}
             />
 
             <div className="Spellbook">

@@ -3,18 +3,34 @@ import Filter from './Filter.js'
 import AllFiltersList from './AllFiltersList.js'
 import allSpells from "../SpellLists/AllSpells";
 
-export default function FiltersList({activeFilters, setActiveFilters, filterSpells, setSpellsToDisplay}) {
+export default function FiltersList({searchTerm, activeSchoolFilters, setActiveSchoolFilters, activeLevelFilters, setActiveLevelFilters, activeEffectFilters, setActiveEffectFilters, filterSpells, setSpellsToDisplay}) {
     
 
     useEffect(() => {
-        setSpellsToDisplay(filterSpells(activeFilters));
-    }, [activeFilters]);
+        setSpellsToDisplay(filterSpells(searchTerm, activeSchoolFilters, activeLevelFilters, activeEffectFilters));
+    }, [searchTerm, activeSchoolFilters, activeLevelFilters, activeEffectFilters]);
 
     const handleFilterClick = (event, filter) => {
         if(event.target.checked){
-            setActiveFilters(activeFilters => [...activeFilters, filter.displayName]);
+            if(filter.filterType === 'School'){
+                setActiveSchoolFilters(activeSchoolFilters => [...activeSchoolFilters, filter.displayName]);
+            }
+            else if(filter.filterType === 'Spell Level'){
+                setActiveLevelFilters(activeLevelFilters => [...activeLevelFilters, filter.displayName]);
+            }
+            else if(filter.filterType === 'Effect'){
+                setActiveEffectFilters(activeEffectFilters => [...activeEffectFilters, filter.displayName]);
+            }
         } else {
-            setActiveFilters(activeFilters.filter(activeFilter => activeFilter !== filter.displayName));
+            if(filter.filterType === 'School'){
+                setActiveSchoolFilters(activeSchoolFilters.filter(activeSchoolFilter => activeSchoolFilter !== filter.displayName));
+            }
+            else if(filter.filterType === 'Spell Level'){
+                setActiveLevelFilters(activeLevelFilters.filter(activeLevelFilter => activeLevelFilter !== filter.displayName));
+            }
+            else if(filter.filterType === 'Effect'){
+                setActiveEffectFilters(activeEffectFilters.filter(activeEffectFilter => activeEffectFilter !== filter.displayName));
+            }
         }
     }
 
